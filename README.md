@@ -1,5 +1,5 @@
 # Introduction
-**SPACE MAYHEM** - 2D arcade space asteroid shooter game
+**SPACE MAYHEM** *- 2D arcade space asteroid shooter game*
 
 Welcome to the repository for our **SPACE MAYHEM** cpp-project developed during the second semester. 
 This project was implemented using **C++** with **raylib-cpp** to provide an interactive and user-friendly interface.
@@ -39,5 +39,5 @@ To build and run this project, you'll need:
 ```bash
 git clone https://github.com/Srivastavavisek/Space-Mayhem.git
 cd Space-Mayhem
-
+```
 You can also simply grab the precompiled executible from the releases section.
