@@ -1,42 +1,34 @@
 # Introduction
-**Space-Mayhem**
-**2D arcade space asteroid shooter game**
+**SPACE MAYHEM** - 2D arcade space asteroid shooter game
 
+Welcome to the repository for our **SPACE MAYHEM** cpp-project developed during the second semester. 
+This project was implemented using **C++** with **raylib-cpp** to provide an interactive and user-friendly interface.
+The game features player-controlled spaceship movement, shooting mechanics.
+In this game, the player controls a spaceship to destroy asteroids while avoiding collisions. 
+The game focuses on player skill in navigating the spaceship, surviving and shooting asteroids for points.
+
+## Project Overview
 Player controls the ship(triangular object) and must navigate through asteroid fields while shooting at incoming obstacles.
-The game focuses on fast-paced action and requires quick reflexes to survive and score points.
-The player can move their spacecraft in all directions
+*Player  :*
+*Asteroids  :*
 
-Graphics Library: **raylib-cpp**
+# Graphics Library:
+Library Used: **[raylib-cpp](https://github.com/RobLoach/raylib-cpp.git)**
 
-**https://github.com/RobLoach/raylib-cpp.git**
-
-# Graphing Calculator - Semester 2 Project
-
-Welcome to the repository for our **Graphing Calculator** project developed during the second semester. This project was implemented using **C++** with **SDL2** to provide an interactive and user-friendly interface, similar to Desmos.
 
 ## Team Members
 
-- [Your Name](https://github.com/yourusername)
-- [Teammate 1](https://github.com/teammate1username)
-- [Teammate 2](https://github.com/teammate2username)
-- [Teammate 3](https://github.com/teammate3username)
+- [*Abhishek Kumar Kayastha*](https://github.com/Srivastavavisek)
+- [*Ashish Bhattarai*](https://github.com/Asislovesu3000)
+- [*Abhishek Singh*](https://github.com/abhisheksingh-cloud)
+- [*Ankit Bhandari*](https://github.com/teammate3username)
 
-## Project Overview
-
-Our graphing calculator allows users to input mathematical equations and visualize their graphs in real time. Features include:
-- Support for various mathematical functions (trigonometric, exponential, logarithmic, etc.)
-- Zooming and panning functionality for exploring graphs
-- User-friendly interface to input equations and modify graphing parameters
 
 ## Getting Started
 
 ### Prerequisites
 
 To build and run this project, you'll need:
-
-- **C++ Compiler** (GCC or MSVC)
-- **SDL2** development libraries
-- **CMake** (if using CMake for building)
 
 ### Clone the Repository
 
