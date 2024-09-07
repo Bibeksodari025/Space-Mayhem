@@ -18,3 +18,5 @@ void Collision::againstWalls(const float dimension, raylib::Vector2& position)
     else if (position.y < -(dimension)) 
         position.y = GetScreenHeight() + dimension;
 }
+
+

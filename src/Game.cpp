@@ -10,7 +10,8 @@ Game::Game()
     , background(&BackGroundTexture, raylib::Rectangle(0, 0, 522, 228), raylib::Rectangle(0, 0, GetScreenWidth(), GetScreenHeight()))
     , numberOfAsteroids(6)
     , asteroidRadius(50.0f)
-    , maxBullets(10)
+    , smallAsteroidRadius(25.0f)
+    , maxBullets(20)
     , startButtonClicked(false)
     , score(0)
     , boomTexture("assets/explosion.png")
@@ -37,6 +38,12 @@ Game::Game()
         asteroids[i].setRadius(asteroidRadius);
     }
 
+    smallAsteroids = new Asteroids[numberOfAsteroids];
+    for (int i = 0; i < numberOfAsteroids; i++)
+    {
+        smallAsteroids[i].setRadius(smallAsteroidRadius);
+    }
+
     //Bullets
     bullet = new Bullet[maxBullets];    
 }
@@ -44,6 +51,7 @@ Game::Game()
 Game::~Game()
 {
     delete[] asteroids;
+    delete[] smallAsteroids;
     delete[] bullet;
     UnloadTexture(boomTexture);
     UnloadSound(boomSound); 
@@ -120,6 +128,15 @@ void Game::update()
                     asteroids[i].init();
             }
 
+            for (int i = 0; i < numberOfAsteroids; i++)
+            {
+                if (smallAsteroids[i].getStatus()) 
+                    smallAsteroids[i].update();
+
+                else
+                    smallAsteroids[i].init();
+            }
+
             //Bullet
             for (int i = 0; i < maxBullets; i++)
             {
@@ -137,6 +154,19 @@ void Game::update()
                         {
                             asteroids[j].destroy();
                             boomPos = asteroids[j].getPos();
+                            boomPos.x -= frameSize.x / 2.0f;
+                            boomPos.y -= frameSize.y / 2.0f;
+                            boom = true;
+                            PlaySound(boomSound);
+                            bullet[i].init();
+                            score += 1;
+                            break;
+                        }
+
+                        if (smallAsteroids[j].getStatus() && CheckCollisionCircles(bullet[i].getPos(), bullet[i].getRadius(), smallAsteroids[j].getPos(), smallAsteroidRadius))
+                        {
+                            smallAsteroids[j].destroy();
+                            boomPos = smallAsteroids[j].getPos();
                             boomPos.x -= frameSize.x / 2.0f;
                             boomPos.y -= frameSize.y / 2.0f;
                             boom = true;
@@ -183,6 +213,16 @@ void Game::update()
                 }
             }
 
+            for (int i = 0; i < numberOfAsteroids; i++)
+            {
+                if (smallAsteroids[i].getStatus() && CheckCollisionCircles(player.getPos(), player.getHeight() / 2, smallAsteroids[i].getPos(), smallAsteroidRadius))
+                {
+                    PlaySound(crashSound);
+                    currentState = GAMEOVER;
+                    break;
+                }
+            }
+
             break;
 
         case GAMEOVER:
@@ -192,6 +232,8 @@ void Game::update()
 
 void Game::render() 
 {
+    std::string controls1 = "W ->\nA ->\nS ->\nD ->\nP ->";
+    std::string controls2 = "accelerate\nLeft Turn\nRight Turn\ndeaccelerate\nPause";
     window.ClearBackground(raylib::RAYWHITE);
     background.draw();
     
@@ -203,21 +245,29 @@ void Game::render()
             {
                 // window.ClearBackground(raylib::RAYWHITE);
                 int fontSize = 80;
-                DrawText(title.c_str(), (GetScreenWidth() - MeasureText(title.c_str(), fontSize)) / 2, GetScreenHeight() / 2 - fontSize / 2, fontSize, DARKGRAY);
+                DrawText(title.c_str(), (GetScreenWidth() - MeasureText(title.c_str(), fontSize)) / 2, GetScreenHeight() / 2 - fontSize / 2, fontSize, WHITE);
                 DrawText("PRESS ENTER TO CONTINUE", GetScreenWidth()/2 - MeasureText("PRESS ENTER TO CONTINUE", 20)/2, 400, 20, YELLOW);
             }      
             break;
       
         case PAUSED:
-            DrawText("PRESS [P] TO RESUME", GetScreenWidth()/2 - MeasureText("PRESS [P] TO RESUME", 20)/2, GetScreenHeight()/2 - 50, 20, GRAY);
+            DrawText("PAUSED", GetScreenWidth() / 2 - MeasureText("PAUSED", 40) / 2, 200, 40, WHITE);
+            DrawText("PRESS [P] TO RESUME", GetScreenWidth()/2 - MeasureText("PRESS [P] TO RESUME", 20)/2, GetScreenHeight()/2 + 100, 20, YELLOW);
 
         case PLAYING:
+
             player.draw();
 
             for (int i = 0; i < numberOfAsteroids; i++)
             {
                 if (asteroids[i].getStatus())
                     asteroids[i].draw();
+            }
+
+            for (int i = 0; i < numberOfAsteroids; i++)
+            {
+                if (smallAsteroids[i].getStatus())
+                    smallAsteroids[i].draw();
             }
 
             //Bullet
@@ -231,17 +281,20 @@ void Game::render()
                 DrawTextureRec(boomTexture, frameRect, boomPos, RAYWHITE);
 
             scoreText = "SCORE: " + std::to_string(score);
-            DrawText(scoreText.c_str(), 100 - MeasureText(scoreText.c_str(), 20) / 2, 10, 20, WHITE);
-
+            DrawText(scoreText.c_str(), GetScreenWidth() / 2 - MeasureText(scoreText.c_str(), 20) / 2, 10, 20, WHITE);
+            DrawText(controls1.c_str(), 1070 - MeasureText(controls1.c_str(), 20) / 2, 10, 20, GRAY);
+            DrawText(controls2.c_str(), 1160 - MeasureText(controls2.c_str(), 20) / 2, 10, 20, GRAY);
+            DrawText("SPACE -> Shoot", 1070 - MeasureText("SPACE -> Shoot", 20) / 2, 120, 20, GRAY);
             break;
 
 
         case GAMEOVER:
-            DrawText("PRESS [ENTER] TO PLAY AGAIN", GetScreenWidth()/2 - MeasureText("PRESS [ENTER] TO PLAY AGAIN", 20)/2, GetScreenHeight()/2, 20, GRAY);
-            DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 40) / 2, 200, 40, WHITE);
+            DrawText("PRESS [ENTER] TO PLAY AGAIN", GetScreenWidth()/2 - MeasureText("PRESS [ENTER] TO PLAY AGAIN", 20)/2, GetScreenHeight()/2 + 50, 20, WHITE);
+            DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 80) / 2, 200, 80, RED);
             
-            std::string scoreText = "Your Score: " + std::to_string(score);
-            DrawText(scoreText.c_str(), GetScreenWidth() / 2 - MeasureText(scoreText.c_str(), 20) / 2, GetScreenHeight() / 2 - 50, 20, GRAY);
+            std::string scoreText = "YOUR SCORE: " + std::to_string(score);
+            DrawText(scoreText.c_str(), GetScreenWidth() / 2 - MeasureText(scoreText.c_str(), 20) / 2, GetScreenHeight() / 2 - 50, 20, YELLOW);
+            DrawText("PRESS [ESC] TO EXIT", GetScreenWidth()/2 - MeasureText("PRESS [ESC] TO EXIT", 20)/2, GetScreenHeight()/2 + 100, 20, WHITE);
             break;
     }
 }
@@ -264,6 +317,7 @@ void Game::resetGame()
     for (int i = 0; i < numberOfAsteroids; i++)
     {
         asteroids[i].init();
+        smallAsteroids[i].init();
     }
 
     for (int i = 0; i < maxBullets; i++)

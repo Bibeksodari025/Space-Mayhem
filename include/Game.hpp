@@ -48,6 +48,9 @@ private:
     // raylib::Vector2 asteroidPos;
     float asteroidRadius;
 
+    Asteroids* smallAsteroids;
+    float smallAsteroidRadius;
+
     //Bullet
     Bullet* bullet;
     int maxBullets;

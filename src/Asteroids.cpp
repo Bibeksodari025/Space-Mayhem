@@ -69,7 +69,7 @@ void Asteroids::draw()
     raylib::Rectangle outClip(position.x - radius, position.y - radius, 2.0f * radius, 2.0f * radius);
     texture.Draw(inClip, outClip, origin, 0.0f, RAYWHITE);
         
-    DrawCircleLinesV(position, radius, RED);
+    // DrawCircleLinesV(position, radius, RED);
     
     //     texture.Unload();
     //     DrawCircleV(position, radius, Fade(LIGHTGRAY, 0.3f));
