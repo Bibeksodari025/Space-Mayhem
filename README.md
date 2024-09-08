@@ -25,7 +25,7 @@ Library Used: **[raylib-cpp](https://github.com/RobLoach/raylib-cpp.git)**
 - [*Abhishek Kumar Kayastha*](https://github.com/Srivastavavisek)
 - [*Ashish Bhattarai*](https://github.com/Asislovesu3000)
 - [*Abhishek Singh*](https://github.com/abhisheksingh-cloud)
-- [*Ankit Bhandari*](https://github.com/teammate3username)
+- *Ankit Bhandari*
 
 
 ## Getting Started
