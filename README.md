@@ -17,7 +17,7 @@ Player controls the ship(triangular object) and must navigate through asteroid f
 *Asteroids  :*
 
 # Graphics Library:
-Library Used: **[raylib-cpp](https://github.com/RobLoach/raylib-cpp.git)**
+### Library Used: **[raylib-cpp](https://github.com/RobLoach/raylib-cpp.git)**
 
 
 ## Team Members
