@@ -14,10 +14,11 @@ The game focuses on player skill in navigating the spaceship, surviving and shoo
 Player controls the ship(triangular object) and must navigate through asteroid fields while shooting at incoming obstacles.
 
 *Player  :*
+
 *Asteroids  :*
 
 # Graphics Library:
-### Library Used: **[raylib-cpp](https://github.com/RobLoach/raylib-cpp.git)**
+Library Used: **[raylib-cpp](https://github.com/RobLoach/raylib-cpp.git)**
 
 
 ## Team Members
