@@ -1,6 +1,6 @@
 @echo off
 setlocal
-
+kaystya
 REM Set the main file, output file, and source files
 set MAIN_FILE=main.cpp
 set OUTPUT_FILE=game.exe
